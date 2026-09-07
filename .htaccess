@@ -1,0 +1,31 @@
+AddDefaultCharset UTF-8
+
+# --- ПЕРЕЗАПИСЬ URL ---
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 1. Редирект с index.html на корень
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/
+    RewriteRule ^index\.html$ https://olimp-75.ru/ [R=301,L,QSA]
+
+    # 3. Скрытие расширения .html
+    # Если файл существует, отдаем его, но в браузере оставляем «чистый» URL
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^([^.]+)$ $1.html [L]
+</IfModule>
+
+# --- КЭШИРОВАНИЕ ---
+FileETag MTime Size
+<IfModule mod_expires.c>
+    ExpiresActive on
+    <FilesMatch "\.(avif|webp|jpg|jpeg|gif|png|ico|css|js|woff2|cur|woff|mp4|svg)$">
+        ExpiresDefault "access plus 1 hour"
+    </FilesMatch>
+</IfModule>
+
+# --- СЖАТИЕ ---
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/xml application/xhtml+xml application/rss+xml application/vnd.ms-fontobject application/x-font-ttf application/x-font-opentype image/svg+xml image/x-icon
+</IfModule>
