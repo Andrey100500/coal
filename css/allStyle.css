@@ -251,3 +251,80 @@ background: linear-gradient(90deg, rgba(165,212,255,1) 35%, rgba(77,117,209,1) 1
 	0 0 5px rgba(0,0,0,.1), 
 	0 1px 3px rgba(0,0,0,.3);
 }
+
+
+
+
+
+
+/* Gallery / Media */
+.ui-media-wrapper { position: relative; overflow: hidden; cursor: pointer; }
+.ui-media-wrapper img { transition: transform 0.3s ease; width: 100%; display: block; }
+.ui-media-wrapper:hover img { transform: scale(1.05); }
+.search-icon {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0; transition: all 0.3s ease; z-index: 2;
+    background: rgba(0, 0, 0, 0.5); border-radius: 50%; width: 50px; height: 50px;
+    display: flex; align-items: center; justify-content: center; color: #fff;
+}
+.ui-media-wrapper:hover .search-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.ui-media-wrapper::after { content: ''; position: absolute; inset: 0;  opacity: 0; transition: 0.3s; z-index: 1; }
+.ui-media-wrapper:hover::after { opacity: 1; }
+
+
+/* ==========================================================================
+   10. LIGHTBOX (Viewer)
+   ========================================================================== */
+.viewer-container { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); z-index: 9999; justify-content: center; align-items: center; }
+.viewer-container.show { display: flex; }
+#fullImage { max-width: 100%; max-height: 80vh; border-radius: 8px; transition: opacity 0.3s; }
+.close-viewer { position: absolute; top: 20px; right: 30px; color: white; cursor: pointer; font-size: 2rem; }
+
+.prev-image, .next-image {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15); /* Прозрачный белый */
+    backdrop-filter: blur(10px); /* Эффект матового стекла */
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 10;
+}
+
+/* Эффект при наведении */
+.prev-image:hover, .next-image:hover {
+    background: var(--brand-accent);
+    color: var(--white);
+    border-color: var(--brand-accent);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Эффект при клике */
+.prev-image:active, .next-image:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Позиционирование */
+.prev-image {
+    left: 20px;
+}
+
+.next-image {
+    right: 20px;
+}
+
+
+.viewerCaption {
+    color: var(--white);
+    text-align: center;
+}
